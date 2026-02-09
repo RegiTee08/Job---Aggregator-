@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobSync | Find Your Dream Job</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: #f1c40f;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f1c40f;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            background-color: #f1f8ff;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Search Section */
+        .search-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .search-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .filter-btn {
+            background: #ecf0f1;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .filter-btn:hover {
+            background: #d5dbdb;
+        }
+
+        .filter-btn.active:hover {
+            background: #2980b9;
+        }
+
+        /* Job Listings */
+        .job-listings {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #3498db;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-card h3 {
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .company {
+            color: #3498db;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .location {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .job-type {
+            display: inline-block;
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-type.full-time {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+
+        .job-type.remote {
+            background: #e8f4fc;
+            color: #3498db;
+        }
+
+        .job-description {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .apply-btn {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .apply-btn:hover {
+            background: #27ae60;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: #3498db;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #3498db;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-input {
+                min-width: 100%;
+            }
+
+            .job-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-briefcase"></i>
+                    <span>JobSync</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#jobs">Jobs</a></li>
+                    <li><a href="#companies">Companies</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Find Your Dream Job Today</h1>
+            <p>Search through thousands of job listings from top companies. Filter by location, job type, and experience level to find the perfect match for your skills.</p>
+            
+            <div class="search-container">
+                <form class="search-form" id="jobSearchForm">
+                    <input type="text" class="search-input" id="searchKeyword" placeholder="Job title, keyword, or company">
+                    <input type="text" class="search-input" id="searchLocation" placeholder="City, state, or remote">
+                    <button type="submit" class="search-btn"><i class="fas fa-search"></i> Search Jobs</button>
+                </form>
+                
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All Jobs</button>
+                    <button class="filter-btn" data-filter="full-time">Full Time</button>
+                    <button class="filter-btn" data-filter="part-time">Part Time</button>
+                    <button class="filter-btn" data-filter="remote">Remote</button>
+                    <button class="filter-btn" data-filter="contract">Contract</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Listings -->
+    <section class="job-listings" id="jobs">
+        <div class="container">
+            <h2 class="section-title">Latest Job Listings</h2>
+            <div class="job-grid" id="jobListings">
+                <!-- Job cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>JobSync</h3>
+                    <p>Your gateway to thousands of job opportunities from top companies worldwide. Find, apply, and grow your career with us.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#jobs">Browse Jobs</a></li>
+                        <li><a href="#companies">Top Companies</a></li>
+                        <li><a href="#blog">Career Tips</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Job Categories</h3>
+                    <ul>
+                        <li><a href="#" data-filter="technology">Technology</a></li>
+                        <li><a href="#" data-filter="marketing">Marketing</a></li>
+                        <li><a href="#" data-filter="finance">Finance</a></li>
+                        <li><a href="#" data-filter="healthcare">Healthcare</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contact@jobsync.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Job Street, Career City</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 JobSync. All rights reserved. | Designed for job seekers worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample job data
+        const jobs = [
+            {
+                id: 1,
+                title: "Frontend Developer",
+                company: "TechCorp Inc.",
+                location: "San Francisco, CA",
+                type: "full-time",
+                category: "technology",
+                description: "We are looking for an experienced frontend developer to join our team. Must have strong skills in React, JavaScript, and CSS.",
+                salary: "$95,000 - $130,000"
+            },
+            {
+                id: 2,
+                title: "UX/UI Designer",
+                company: "CreativeMinds",
+                location: "Remote",
+                type: "remote",
+                category: "design",
+                description: "Join our design team to create beautiful and functional user interfaces for web and mobile applications.",
+                salary: "$85,000 - $110,000"
+            },
+            {
+                id: 3,
+                title: "Data Scientist",
+                company: "DataWorks",
+                location: "New York, NY",
+                type: "full-time",
+                category: "technology",
+                description: "Seeking a data scientist with expertise in machine learning and statistical analysis to extract insights from large datasets.",
+                salary: "$110,000 - $150,000"
+            },
+            {
+                id: 4,
+                title: "Marketing Manager",
+                company: "BrandBoost",
+                location: "Chicago, IL",
+                type: "full-time",
+                category: "marketing",
+                description: "Lead our marketing team in developing and executing strategies to increase brand awareness and drive customer acquisition.",
+                salary: "$90,000 - $120,000"
+            },
+            {
+                id: 5,
+                title: "Customer Support Specialist",
+                company: "HelpDesk Solutions",
+                location: "Remote",
+                type: "part-time",
+                category: "customer-service",
+                description: "Provide exceptional customer support via email, chat, and phone. Previous customer service experience preferred.",
+                salary: "$25 - $30/hour"
+            },
+            {
+                id: 6,
+                title: "Financial Analyst",
+                company: "MoneyMatters Inc.",
+                location: "Boston, MA",
+                type: "contract",
+                category: "finance",
+                description: "6-month contract position for a financial analyst to assist with budgeting, forecasting, and financial reporting.",
+                salary: "$45 - $55/hour"
+            },
+            {
+                id: 7,
+                title: "Full Stack Developer",
+                company: "WebSolutions Co.",
+                location: "Austin, TX",
+                type: "full-time",
+                category: "technology",
+                description: "Develop and maintain web applications using modern technologies including Node.js, React, and MongoDB.",
+                salary: "$100,000 - $140,000"
+            },
+            {
+                id: 8,
+                title: "Healthcare Administrator",
+                company: "MediCare Group",
+                location: "Philadelphia, PA",
+                type: "full-time",
+                category: "healthcare",
+                description: "Manage daily operations of healthcare facility, oversee staff, and ensure compliance with regulations.",
+                salary: "$75,000 - $95,000"
+            }
+        ];
+
+        // DOM elements
+        const jobListingsElement = document.getElementById('jobListings');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const searchForm = document.getElementById('jobSearchForm');
+        const searchKeyword = document.getElementById('searchKeyword');
+        const searchLocation = document.getElementById('searchLocation');
+        const footerCategoryLinks = document.querySelectorAll('.footer-column a[data-filter]');
+
+        // Initialize the job listings
+        function renderJobs(jobsToRender) {
+            jobListingsElement.innerHTML = '';
+            
+            if (jobsToRender.length === 0) {
+                jobListingsElement.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <h3>No jobs found matching your criteria</h3>
+                        <p>Try adjusting your search filters or keywords</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            jobsToRender.forEach(job => {
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.setAttribute('data-type', job.type);
+                jobCard.setAttribute('data-category', job.category);
+                
+                // Determine job type class for styling
+                let typeClass = '';
+                if (job.type === 'full-time') typeClass = 'full-time';
+                if (job.type === 'remote') typeClass = 'remote';
+                
+                jobCard.innerHTML = `
+                    <h3>${job.title}</h3>
+                    <div class="company">
+                        <i class="fas fa-building"></i>
+                        ${job.company}
+                    </div>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        ${job.location}
+                    </div>
+                    <div class="job-type ${typeClass}">${job.type.charAt(0).toUpperCase() + job.type.slice(1)}</div>
+                    <p class="job-description">${job.description}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span style="font-weight: 600; color: #2c3e50;">${job.salary}</span>
+                    </div>
+                    <button class="apply-btn" data-id="${job.id}">Apply Now</button>
+                `;
+                
+                jobListingsElement.appendChild(jobCard);
+            });
+            
+            // Add event listeners to apply buttons
+            document.querySelectorAll('.apply-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const jobId = this.getAttribute('data-id');
+                    const job = jobs.find(j => j.id == jobId);
+                    alert(`Applying for: ${job.title} at ${job.company}\n\nThis is a demo. In a real application, you would be redirected to the application page.`);
+                });
+            });
+        }
+
+        // Filter jobs by type
+        function filterJobs(type) {
+            if (type === 'all') {
+                return jobs;
+            }
+            return jobs.filter(job => job.type === type);
+        }
+
+        // Search jobs by keyword and location
+        function searchJobs(keyword, location) {
+            keyword = keyword.toLowerCase().trim();
+            location = location.toLowerCase().trim();
+            
+            return jobs.filter(job => {
+                const matchesKeyword = 
+                    job.title.toLowerCase().includes(keyword) ||
+                    job.company.toLowerCase().includes(keyword) ||
+                    job.description.toLowerCase().includes(keyword) ||
+                    job.category.toLowerCase().includes(keyword);
+                
+                const matchesLocation = 
+                    location === '' || 
+                    job.location.toLowerCase().includes(location);
+                
+                return matchesKeyword && matchesLocation;
+            });
+        }
+
+        // Initialize with all jobs
+        renderJobs(jobs);
+
+        // Add event listeners to filter buttons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter jobs
+                const filterType = this.getAttribute('data-filter');
+                const filteredJobs = filterJobs(filterType);
+                renderJobs(filteredJobs);
+            });
+        });
+
+        // Add event listener to search form
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const keyword = searchKeyword.value;
+            const location = searchLocation.value;
+            
+            // Reset filter buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            filterButtons[0].classList.add('active');
+            
+            // Search and render jobs
+            const searchResults = searchJobs(keyword, location);
+            renderJobs(searchResults);
+        });
+
+        // Add event listeners to footer category links
+        footerCategoryLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const category = this.getAttribute('data-filter');
+                searchKeyword.value = category;
+                searchLocation.value = '';
+                
+                // Reset filter buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                filterButtons[0].classList.add('active');
+                
+                // Search and render jobs
+                const searchResults = searchJobs(category, '');
+                renderJobs(searchResults);
+                
+                // Scroll to job listings
+                document.getElementById('jobs').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Simple animation for job cards on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const jobCards = document.querySelectorAll('.job-card');
+            jobCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>
